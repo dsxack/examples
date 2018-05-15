@@ -1,0 +1,60 @@
+- name: Gathering facts
+  setup:
+
+- name: Set facts
+  set_fact: node_ip="{{ ansible_host | default(inventory_hostname) }}"
+
+- name: Create swapfile
+  command: "fallocate -l {{ swap_size }} {{ swap_path }}"
+  register: write_swapfile
+
+- name: Set swapfile permissions
+  file: path="{{ swap_path }}" mode=600
+
+- name: Build swapfile
+  command: "mkswap {{ swap_path }}"
+  register: create_swapfile
+  when: write_swapfile.changed
+
+- name: Enable swapfile
+  command: "swapon {{ swap_path }}"
+  when: create_swapfile.changed
+
+- name: Add swapfile to /etc/fstab
+  lineinfile: dest=/etc/fstab line="{{ swap_path }}   none    swap    sw    0   0" state=present
+
+- name: Configure swappiness
+  lineinfile: dest=/etc/sysctl.conf
+              line="vm.swappiness = {{ swappiness }}"
+              regexp="^vm.swappiness[\s]?="
+              state=present
+  notify: sysctl
+  when: swappiness != false
+
+- name: Configure vm.vfs_cache_pressure
+  lineinfile: dest=/etc/sysctl.conf
+              line="vm.vfs_cache_pressure = {{ vfs_cache_pressure }}"
+              regexp="^vm.vfs_cache_pressure[\s]?="
+              state=present
+  notify: sysctl
+  when: vfs_cache_pressure != false
+
+- name: Restart server
+  shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+  async: 1
+  poll: 0
+  ignore_errors: true
+
+- name: Wait for server to restart successfully
+  local_action: wait_for
+    host="{{ node_ip }}"
+    port=22
+    delay=1
+    timeout=30
+
+- name: Get last two reboots
+  command: /usr/bin/last reboot | head -2
+  register: last
+
+- name: Show last two reboots
+  debug: var=last.stdout_lines

@@ -1,0 +1,4 @@
+[root]
+name = "rust_http_echo_over_tcp"
+version = "0.1.0"
+

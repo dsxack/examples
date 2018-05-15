@@ -1,0 +1,6 @@
+[package]
+name = "rust_pilosopher_dinner"
+version = "0.1.0"
+authors = ["Smotrov Dmitriy <dsxack@gmail.com>"]
+
+[dependencies]

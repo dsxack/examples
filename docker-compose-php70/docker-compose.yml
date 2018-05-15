@@ -1,0 +1,36 @@
+version: '2'
+services:
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - ./db:/var/lib/mysql
+    ports:
+      - "11000:3306"
+    restart: always
+
+  source:
+    build: ./source
+    volumes:
+      - ./source/www:/var/www/html
+    depends_on:
+      - db
+    expose:
+      - "9000"
+    restart: always
+
+  web:
+    image: nginx:stable
+    volumes:
+      - ./web/default.conf:/etc/nginx/conf.d/default.conf
+    volumes_from:
+      - source
+    ports:
+      - "10000:80"
+    depends_on:
+      - source
+    links:
+      - source
+    restart: always
+

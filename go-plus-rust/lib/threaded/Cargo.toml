@@ -1,0 +1,10 @@
+[package]
+name = "threaded"
+version = "0.1.0"
+authors = ["Smotrov Dmitriy <smotrov@worksolutions.ru>"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+libc = "0.2.2"

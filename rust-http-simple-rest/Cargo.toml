@@ -1,0 +1,8 @@
+[package]
+authors = ["Smotrov Dmitriy <smotrov@worksolutions.ru>"]
+name = "rust_http_simple_rest"
+version = "0.1.0"
+
+[dependencies]
+iron = "0.6.0"
+router = "0.6.0"

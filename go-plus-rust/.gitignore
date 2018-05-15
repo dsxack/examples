@@ -1,0 +1,5 @@
+/.idea/
+*.dylib
+*.so
+*.dll
+Cargo.lock

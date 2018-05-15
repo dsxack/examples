@@ -1,0 +1,7 @@
+- name: Add autoupdates string into crontab
+  cron:
+        name="Daily updates"
+        job="apt-get upgrade -y 2>&1 >> /root/apt-get-upgrade.log"
+        minute="0"
+        hour="1"
+        user=root

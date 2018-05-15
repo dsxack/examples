@@ -1,0 +1,6 @@
+[package]
+name = "rust-time-example"
+version = "0.1.0"
+authors = ["Smotrov Dmitriy <smotrov@worksolutions.ru>"]
+
+[dependencies]

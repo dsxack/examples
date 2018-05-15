@@ -1,0 +1,30 @@
+---
+- name: Installing zsh and git
+  apt: pkg=zsh,git state=latest
+  register: installation
+
+- name: Backing up existing ~/.zshrc
+  shell: if [ -f ~/.zshrc ]; then mv ~/.zshrc ~/.zshrc.orig; fi
+  when: installation|success
+
+- name: Cloning  oh-my-zsh
+  git:
+    repo=https://github.com/robbyrussell/oh-my-zsh
+    dest=~/.oh-my-zsh
+  when: installation|success
+  register: cloning
+
+- name: Creating new ~/.zshrc
+  copy:
+    src=~/.oh-my-zsh/templates/zshrc.zsh-template
+    dest=~/.zshrc
+  when: cloning|success
+  register: configuring
+
+- name: Set shell
+  raw: chsh -s /bin/zsh
+  when: configuring|success
+
+- name: Change theme
+  lineinfile: path=~/.zshrc regexp='^ZSH_THEME=' line='ZSH_THEME="{{ theme }}"'
+  when: theme != false
