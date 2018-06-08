@@ -1,0 +1,47 @@
+debug = true
+
+logLevel = "INFO"
+defaultEntryPoints = ["https","http"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+  [entryPoints.ping]
+  address = ":8082"
+
+  [entryPoints.api]
+  address = ":8083"
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "traefik.dsxack.com"
+watch = true
+exposedByDefault = false
+
+[acme]
+email = "dsxack@gmail.com"
+storage = "acme.json"
+entryPoint = "https"
+    #[acme.httpChallenge]
+    #entryPoint = "http"
+    [acme.dnsChallenge]
+    provider = "digitalocean"
+    delayBeforeCheck = 0
+    [[acme.domains]]
+    main = "*.traefik.dsxack.com"
+
+[ping]
+entryPoint = "ping"
+
+[api]
+entryPoint = "api"
+dashboard = true

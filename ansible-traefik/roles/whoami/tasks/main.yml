@@ -1,0 +1,16 @@
+---
+
+- name: Setup whoami
+  docker_container:
+    name: "whoami"
+    image: "emilevauge/whoami"
+    labels:
+      traefik.enable: "true"
+      traefik.test1.frontend.rule: "Host:whoami1.traefik.dsxack.com"
+      traefik.test2.frontend.rule: "Host:whoami2.traefik.dsxack.com"
+      traefik.docker.network: "web"
+    state: started
+    recreate: yes
+    restart_policy: always
+    networks:
+      - name: web

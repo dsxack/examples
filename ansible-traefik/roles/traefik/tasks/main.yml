@@ -1,0 +1,39 @@
+---
+
+- file:
+    path: "/opt/traefik"
+    state: directory
+    mode: 0755
+
+- file:
+    path: "/opt/traefik/acme.json"
+    state: touch
+    mode: 0600
+
+- copy:
+    src: "traefik.toml"
+    dest: "/opt/traefik/traefik.toml"
+
+- docker_network:
+    name: web
+
+- name: Setup traefik proxy
+  docker_container:
+    name: "traefik"
+    image: "traefik"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/opt/traefik/traefik.toml:/traefik.toml"
+      - "/opt/traefik/acme.json:/acme.json"
+    ports:
+      - "443:443"
+      - "8082:8082"
+      - "8083:8083"
+      - "80:80"
+    state: started
+    recreate: yes
+    restart_policy: always
+    networks:
+      - name: web
+    env:
+      DO_AUTH_TOKEN: b1fa87fd9e94377ebb06e9035f6c063cbbd3b9774e9af29c97ccb9d1f350a64c

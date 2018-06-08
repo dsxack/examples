@@ -1,0 +1,7 @@
+- hosts: all
+  remote_user: root
+  gather_facts: no
+
+  roles:
+    - { role: traefik, tags: traefik }
+    - { role: whoami, tags: whoami }
