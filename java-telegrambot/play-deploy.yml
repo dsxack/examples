@@ -1,0 +1,32 @@
+- hosts: all
+  remote_user: root
+  gather_facts: no
+
+  pre_tasks:
+    - name: Check "container_name" variable is not empty
+      fail:
+        msg: variable "container_name" is required
+      when: container_name == false
+
+    - name: Check "image_name" variable is not empty
+      fail:
+        msg: variable "image_name" is required
+      when: image_name == false
+
+  tasks:
+    - debug:
+        msg: "container_name == {{ container_name }}"
+
+    - debug:
+        msg: "image_name == {{ image_name }}"
+
+    - name: Create a container
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ image_name }}"
+        state: started
+        recreate: yes
+        restart_policy: always
+        pull: true
+        ignore_image: true
+
