@@ -1,0 +1,9 @@
+[package]
+name = "rust-telegram"
+version = "0.1.0"
+authors = ["Smotrov Dmitriy <smotrov@worksolutions.ru>"]
+
+[dependencies]
+futures = "0.1.23"
+telegram-bot = "0.6.1"
+tokio-core = "0.1.17"
