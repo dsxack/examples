@@ -9,19 +9,20 @@ struct Nameval {
 };
 
 struct Nvtab {
-    int nval;
-    int max;
-    Nameval *nameval;
+    int nval;           /* текущее количество элементов */
+    int max;            /* количество выделеных ячеек */
+    Nameval *nameval;   /* массив пар "имя-значение" */
 } nvtab;
 
 enum {
     NVINIT = 1, NVGROW = 2
 };
 
+/* addname: добавляет новое имя и значение в структуру nvtab */
 int addname(Nameval newname) {
     Nameval *nvp;
 
-    if (nvtab.nameval == NULL) {
+    if (nvtab.nameval == NULL) { /* первый раз */
         nvtab.nameval = (Nameval *) malloc(NVINIT * sizeof(Nameval));
         if (nvtab.nameval == NULL) {
             return -1;
@@ -29,7 +30,7 @@ int addname(Nameval newname) {
         nvtab.max = NVINIT;
         nvtab.nval = 0;
     } else if (nvtab.nval >= nvtab.max) {
-        nvp = (Nameval *) realloc(nvtab.nameval, (NVGROW * nvtab.max) * sizeof(Nameval));
+        nvp = (Nameval *) realloc(nvtab.nameval, (NVGROW * nvtab.max) * sizeof(Nameval)); /* расширение */
         if (nvp == NULL) {
             return -1;
         }
@@ -40,6 +41,7 @@ int addname(Nameval newname) {
     return nvtab.nval++;
 }
 
+/* delname: удаление первой найденной строки nameval из массива nvtab */
 int delname(char *name) {
     int i;
     for (i = 0; i < nvtab.nval; ++i) {
