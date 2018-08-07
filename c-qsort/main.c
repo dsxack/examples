@@ -11,6 +11,7 @@ void swap(int v[], int i, int j) {
     v[j] = temp;
 }
 
+/* quicksort: сортирует v[0]...v[n-1] в порядке возрастания */
 void quicksort(int v[], int n) {
     int i, last;
 
