@@ -1,5 +1,5 @@
-#include <cstdlib>
-#include <cstdio>
+#include "stdlib.h"
+#include "stdio.h"
 
 #define NELEMS(array) (sizeof(array) / sizeof(array[0]))
 
@@ -27,7 +27,7 @@ void quicksort(int v[], int n) {
     }
     swap(v, 0, last);       /* восстановить опору */
     quicksort(v, last);     /* рекурсивная сортировка */
-    quicksort(v+last, n-last-1);    /* каждой из частей */
+    quicksort(v+last+1, n-last-1);    /* каждой из частей */
 }
 
 int main() {
@@ -35,8 +35,8 @@ int main() {
 
     quicksort(values, NELEMS(values));
 
-    for (int value : values) {
-        printf("%d ", value);
+    for (int i = 0; i < NELEMS(values); ++i) {
+        printf("%d ", values[i]);
     }
 
     return 0;

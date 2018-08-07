@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 
-add_executable(cpp_qsort
-        main.cpp)
+add_executable(c_qsort
+        main.c)
