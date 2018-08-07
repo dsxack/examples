@@ -3,13 +3,14 @@
 
 #define NELEMS(array) (sizeof(array) / sizeof(array[0]))
 
+typedef struct Nameval Nameval;
 struct Nameval {
     const char *name;
     int     value;
 };
 
 /* lookup: двоичный поиск строки name в массиве tab; возвращает индекс */
-int lookup(const char *name, struct Nameval tab[], int ntab) {
+int lookup(const char *name, Nameval tab[], int ntab) {
     int low, high, mid, cmp;
 
     low = 0;
@@ -30,7 +31,7 @@ int lookup(const char *name, struct Nameval tab[], int ntab) {
 }
 
 int main() {
-    struct Nameval htmlchars[] = {
+    Nameval htmlchars[] = {
         "AElig",    0x00c6,
         "AAcute",   0x00c1,
         "Acicrc",   0x00c2,
