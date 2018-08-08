@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <memory.h>
-#include <stdlib.h>
-#include <zconf.h>
-#include <errno.h>
+#include "eprintf.h"
 
 typedef struct Nameval Nameval;
 struct Nameval {
@@ -11,26 +9,6 @@ struct Nameval {
     Nameval *left;  /* меньшее значение */
     Nameval *right; /* большее значение */
 };
-
-/* weprintf: выводит сообщение об ошибке */
-void weprintf(char *fmt, ...) {
-    va_list args;
-
-    fflush(stdout);
-    if (getprogname() != NULL) {
-        fprintf(stderr, "%s: ", getprogname());
-    }
-
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-
-    if (fmt[0] != '\0' && fmt[strlen(fmt) - 1] == ':') {
-        fprintf(stderr, " %s", strerror(errno));
-    }
-
-    fprintf(stderr, "\n");
-}
 
 /* insert: вставляет newp в дерево treep, возвращает treep */
 Nameval *insert(Nameval *treep, Nameval *newp) {
@@ -112,39 +90,6 @@ void applypostorder(Nameval *treep,
     applypostorder(treep->left, fn, arg);
     applypostorder(treep->right, fn, arg);
     (*fn)(treep, arg);
-}
-
-/* eprintf: выводит сообщение об ошибке и выходит */
-void eprintf(char *fmt, ...) {
-    va_list args;
-
-    fflush(stdout);
-    if (getprogname() != NULL) {
-        fprintf(stderr, "%s: ", getprogname());
-    }
-
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-
-    if (fmt[0] != '\0' && fmt[strlen(fmt) - 1] == ':') {
-        fprintf(stderr, " %s", strerror(errno));
-    }
-
-    fprintf(stderr, "\n");
-    exit(2); /* условный код аварийного выхода */
-}
-
-/* emalloc: вызывает malloc, сообщает об ошибке */
-void *emalloc(size_t n) {
-    void *p;
-
-    p = malloc(n);
-    if (p == NULL) {
-        eprintf("malloc of %u bytes failed:", n);
-    }
-
-    return p;
 }
 
 /* printv: вывести имя и значения по строке формата arg */

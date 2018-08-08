@@ -3,4 +3,4 @@ project(c_btree C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(c_btree main.c)
+add_executable(c_btree main.c eprintf.c eprintf.h)
