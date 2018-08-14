@@ -1,0 +1,62 @@
+---
+
+- file:
+    path: "/opt/prometheus"
+    state: directory
+    mode: 0777
+
+- copy:
+    src: "prometheus.yml"
+    dest: "/opt/prometheus/prometheus.yml"
+
+- docker_network:
+    name: shared
+
+#- docker_container:
+#    name: "prometheus-blackbox-exporter"
+#    image: "prom/blackbox-exporter"
+#    pull: true
+#    state: started
+#    restart_policy: always
+#    networks:
+#    - name: shared
+
+#- docker_container:
+#    name: "prometheus-elasticsearch-exporter"
+#    image: "justwatch/elasticsearch_exporter:1.0.2"
+#    pull: true
+#    state: started
+#    command:
+#    - '-es.uri=http://elastic-elasticsearch:9200'
+#    restart_policy: always
+#    networks:
+#    - name: shared
+
+#- docker_container:
+#    name: "prometheus-mysqld-exporter"
+#    image: "prom/mysqld-exporter"
+#    pull: true
+#    state: started
+#    restart_policy: always
+#    networks:
+#    - name: shared
+#    env:
+#      DATA_SOURCE_NAME: "user:password@(dbname:3306)/"
+
+- docker_container:
+    name: "prometheus"
+    image: "prom/prometheus"
+    state: started
+    pull: true
+    recreate: yes
+    restart_policy: always
+    volumes:
+    - "/opt/prometheus/data:/prometheus"
+    - "/opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+    networks:
+    - name: shared
+    labels:
+      traefik.docker.network: "shared"
+      traefik.port: "9090"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:prometheus.example.com"
