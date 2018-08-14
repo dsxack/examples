@@ -1,0 +1,15 @@
+---
+
+- name: Setup whoami
+  docker_container:
+    name: "whoami"
+    image: "emilevauge/whoami"
+    labels:
+      traefik.docker.network: "shared"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:whoami.example.com"
+    state: started
+    recreate: yes
+    restart_policy: always
+    networks:
+      - name: shared
