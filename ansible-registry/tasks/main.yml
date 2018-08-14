@@ -1,0 +1,29 @@
+---
+
+- file:
+    path: "{{ registry.config_dir }}"
+    state: directory
+    mode: 0755
+
+- synchronize:
+    src: .
+    dest: "{{ registry.config_dir }}"
+
+- docker_container:
+    name: "registry"
+    image: "smotrovi/distribution"
+    state: started
+    restart_policy: always
+    pull: true
+    volumes:
+      - "{{ registry.config_dir }}/config.yml:/etc/docker/registry/config.yml"
+      - "{{ registry.config_dir }}/data:/var/lib/registry"
+    networks:
+    - name: shared
+    labels:
+      traefik.docker.network: "shared"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:registry.example.com"
+      traefik.port: "5000"
+#      traefik.frontend.auth.basic: "user:!!!basic-hash!!!"
+

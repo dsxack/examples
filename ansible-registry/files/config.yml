@@ -1,0 +1,25 @@
+version: 0.1
+log:
+  fields:
+    service: registry
+storage:
+  delete:
+    enabled: true
+  cache:
+    blobdescriptor: inmemory
+  filesystem:
+    rootdirectory: /var/lib/registry
+http:
+  addr: :5000
+  host: https://registry.example.com
+  secret: !!!!some_secret!!!!
+  relativeurls: true
+  headers:
+    X-Content-Type-Options: [nosniff]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+validation:
+  enabled: false
