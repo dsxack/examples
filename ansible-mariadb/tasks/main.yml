@@ -1,0 +1,19 @@
+---
+
+- docker_network:
+    name: shared
+
+- docker_container:
+    name: "mariadb"
+    image: "mariadb:10"
+    state: started
+    recreate: yes
+    restart_policy: always
+    networks:
+      - name: shared
+    env:
+      MYSQL_ROOT_PASSWORD: "password"
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - "/opt/mariadb:/var/lib/mysql"
