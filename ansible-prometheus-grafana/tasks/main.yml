@@ -1,13 +1,20 @@
 ---
 
 - file:
-    path: "/opt/prometheus"
+    path: "{{ item }}"
     state: directory
     mode: 0777
+  with_items:
+    - "/opt/grafana"
+    - "/opt/prometheus"
 
 - copy:
     src: "prometheus.yml"
     dest: "/opt/prometheus/prometheus.yml"
+
+- copy:
+    src: "grafana.ini"
+    dest: "/opt/grafana/grafana.ini"
 
 - docker_network:
     name: shared
@@ -60,3 +67,24 @@
       traefik.port: "9090"
       traefik.enable: "true"
       traefik.frontend.rule: "Host:prometheus.example.com"
+
+- docker_container:
+    name: "grafana"
+    image: "grafana/grafana"
+    state: started
+    restart_policy: always
+    recreate: yes
+    volumes:
+    - "/opt/grafana/data:/var/lib/grafana"
+    - "/opt/grafana/grafana.ini:/etc/grafana/grafana.ini"
+    networks:
+    - name: shared
+    env:
+    #      GF_AUTH_ANONYMOUS_ENABLED: "true"
+    #      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+
+    labels:
+      traefik.docker.network: "shared"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:grafana.example.com"
+      traefik.port: "3000"
