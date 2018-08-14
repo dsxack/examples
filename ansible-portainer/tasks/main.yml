@@ -1,0 +1,25 @@
+---
+
+- file:
+    path: "/opt/portainer"
+    state: directory
+    mode: 0755
+
+- docker_network:
+    name: shared
+
+- docker_container:
+    name: "portainer"
+    image: "portainer/portainer"
+    state: started
+    pull: true
+    restart_policy: always
+    volumes:
+      - "/opt/portainer:/data"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - name: shared
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "shared"
+      traefik.frontend.rule: "Host:portainer.example.com"
