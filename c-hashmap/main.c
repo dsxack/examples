@@ -17,6 +17,7 @@ enum {
     MULTIPLIER = 31
 };
 
+/* hash: вычисляет хеш-код строки */
 unsigned int hash(char *str) {
     unsigned int h;
     unsigned char *p;
@@ -29,6 +30,7 @@ unsigned int hash(char *str) {
     return h % NHASH;
 }
 
+/* lookup: находит имя для name в таблице symtab, по необходимости добавляя */
 Nameval *lookup(char *name, int create, int value) {
     int h;
     Nameval *sym;
