@@ -1,0 +1,20 @@
+filebeat.config:
+  prospectors:
+    path: ${path.config}/prospectors.d/*.yml
+    reload.enabled: false
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+processors:
+- add_cloud_metadata:
+
+output.elasticsearch:
+  hosts: ['elastic-elasticsearch:9200']
+  username: elastic
+  password: changeme
+
+filebeat.inputs:
+- type: docker
+  containers.ids:
+  - '*'

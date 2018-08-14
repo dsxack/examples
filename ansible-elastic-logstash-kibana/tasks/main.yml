@@ -1,0 +1,80 @@
+---
+
+- file:
+    path: "/opt/elastic/"
+    state: directory
+    mode: 0777
+
+- synchronize:
+    src: .
+    dest: "/opt/elastic/conf"
+
+- file:
+    path: "/opt/elastic/conf"
+    recurse: yes
+    owner: root
+    group: root
+    mode: 0644
+
+- docker_network:
+    name: shared
+
+- docker_container:
+    name: "elastic-elasticsearch"
+    image: "docker.elastic.co/elasticsearch/elasticsearch:6.3.2"
+    state: started
+    restart_policy: always
+    networks:
+    - name: shared
+    ulimits:
+    - "memlock:-1:-1"
+    env:
+        ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    volumes:
+    - "/opt/elastic/conf/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+    - "/opt/elastic/elasticsearch-data:/usr/share/elasticsearch/data"
+
+- docker_container:
+    name: "elastic-logstash"
+    image: "docker.elastic.co/logstash/logstash:6.3.2"
+    state: started
+    restart_policy: always
+    user: root
+    networks:
+    - name: shared
+    env:
+        ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    volumes:
+    - "/opt/elastic/conf/logstash-pipelines/:/usr/share/logstash/pipeline/"
+    - "/opt/elastic/conf/logstash.yml:/usr/share/logstash/config/logstash.yml"
+
+#- docker_container:
+#      name: "elastic-filebeat"
+#      image: "docker.elastic.co/beats/filebeat:6.3.2"
+#      state: started
+#      restart_policy: always
+#      user: root
+#      networks:
+#      - name: shared
+#      volumes:
+#      - "/opt/elastic/conf/filebeat.yml:/usr/share/filebeat/filebeat.yml"
+#      - "/var/run/docker.sock:/var/run/docker.sock"
+#      - "/var/lib/docker/:/var/lib/docker/"
+
+- docker_container:
+    name: "elastic-kibana"
+    image: "docker.elastic.co/kibana/kibana:6.3.2"
+    state: started
+    restart_policy: always
+    volumes:
+    - "/opt/elastic/conf/kibana.yml:/usr/share/kibana/config/kibana.yml"
+    networks:
+    - name: shared
+    env:
+        ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    labels:
+      traefik.docker.network: "shared"
+      traefik.enable: "true"
+      traefik.port: "5601"
+      traefik.frontend.rule: "Host:kibana.example.com"
+
