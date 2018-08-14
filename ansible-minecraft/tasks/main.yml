@@ -1,0 +1,19 @@
+---
+
+- file:
+    path: "/opt/minecraft/volume"
+    state: directory
+    mode: 0755
+
+- docker_container:
+    name: "minecraft-server"
+    image: "smotrovi/minecraft-server"
+    state: started
+    recreate: yes
+    restart_policy: always
+    interactive: true
+    tty: true
+    volumes:
+      - "/opt/minecraft/volume:/minecraft/volume"
+    ports:
+      - "25565:25565"
