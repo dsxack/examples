@@ -1,8 +1,8 @@
 FROM php:7.1-apache
 
 RUN apt-get update && apt-get install -y --force-yes \
-        libmysqlclient-dev  \
-        libpng12-dev \
+        default-libmysqlclient-dev  \
+        libpng-dev \
         libmcrypt-dev \
         libjpeg-dev \
         libfreetype6-dev \
