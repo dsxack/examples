@@ -17,7 +17,9 @@ RUN yes | pecl install xdebug \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 RUN yes | echo "mbstring.func_overload=2" >> /usr/local/etc/php/conf.d/mbstring.ini \
-    && echo "mbstring.internal_encoding=utf-8" >> /usr/local/etc/php/conf.d/mbstring.ini
+    && echo "mbstring.internal_encoding=utf-8" >> /usr/local/etc/php/conf.d/mbstring.ini \
+    && echo "date.timezone=Europe/Moscow" >> /usr/local/etc/php/conf.d/date.ini \
+    && echo "session.save_path=/tmp" >> /usr/local/etc/php/conf.d/session.ini
 
 COPY etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
