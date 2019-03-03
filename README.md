@@ -98,6 +98,7 @@ Many different pieces of code
 * [go-websocket](go-websocket) - Websocket app written in Go
 * [go-x509-certs](go-x509-certs) - x509 certs manipulation with Go
 * [go-exec-from-memory](go-exec-from-memory) - Running binary app from memory without saving on the disk
+* [go-https-attack-proxy](go-https-attack-proxy) - HTTPS/HTTP attack proxy that sniffing requests and responses
 
 ### Java language
 
