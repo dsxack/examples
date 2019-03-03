@@ -24,7 +24,7 @@ Many different pieces of code
     + [Linked lists](#linked-lists)
     + [Markov chain](#markov-chain)
     + [Quick sort](#quick-sort)
-    + [Fibonacci](#fibonacci)s
+    + [Fibonacci](#fibonacci)
 
 ## Administration
 
