@@ -97,6 +97,7 @@ Many different pieces of code
 * [go-webassembly](go-webassembly) - Webassembly app written in Go
 * [go-websocket](go-websocket) - Websocket app written in Go
 * [go-x509-certs](go-x509-certs) - x509 certs manipulation with Go
+* [go-exec-from-memory](go-exec-from-memory) - Running binary app from memory without saving on the disk
 
 ### Java language
 
