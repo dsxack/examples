@@ -2,6 +2,30 @@
 
 Many different pieces of code
 
+- [Examples](#examples)
+  * [Administration](#administration)
+    + [Ansible](#ansible)
+    + [Docker](#docker)
+    + [Scripts](#scripts)
+  * [Languages](#languages)
+    + [C language](#c-language)
+    + [Go language](#go-language)
+    + [Java language](#java-language)
+    + [JavaScript language](#javascript-language)
+    + [PHP language](#php-language)
+    + [Python language](#python-language)
+    + [Rust language](#rust-language)
+    + [Inter language communication](#inter-language-communication)
+  * [Algorithms](#algorithms)
+    + [Binary search](#binary-search)
+    + [Binary tree](#binary-tree)
+    + [Extensible array](#extensible-array)
+    + [Hashmap](#hashmap)
+    + [Linked lists](#linked-lists)
+    + [Markov chain](#markov-chain)
+    + [Quick sort](#quick-sort)
+    + [Fibonacci](#fibonacci)s
+
 ## Administration
 
 ### Ansible
