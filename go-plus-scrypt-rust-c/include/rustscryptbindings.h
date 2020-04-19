@@ -1,0 +1,1 @@
+int scrypt_key(char* password, char* salt, int r, int p, int n, unsigned char* result, size_t result_size);

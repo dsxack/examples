@@ -92,6 +92,7 @@ Many different pieces of code
 * [go-http-pipe](go-http-pipe) - HTTP pipe server written in Go
 * [go-philosopher-dinner](go-philosopher-dinner) - Philosopher dinner app from Rustbook written in Go
 * [go-plus-rust](go-plus-rust) - Go plus Rust languages intercommunication
+* [go-plus-scrypt-rust-c](go-plus-scrypt-rust-c) - Rust scrypt bindings for go
 * [go-tcp-echo](go-tcp-echo) - TCP echo server written in Go
 * [go-telegrambot](go-telegrambot) - Telegram bot written in Go
 * [go-webassembly](go-webassembly) - Webassembly app written in Go
