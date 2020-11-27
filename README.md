@@ -100,6 +100,7 @@ Many different pieces of code
 * [go-x509-certs](go-x509-certs) - x509 certs manipulation with Go
 * [go-exec-from-memory](go-exec-from-memory) - Running binary app from memory without saving on the disk
 * [go-https-attack-proxy](go-https-attack-proxy) - HTTPS/HTTP attack proxy that sniffing requests and responses
+* [go-plugins-cgo-with-same-symbol-names](go-plugins-cgo-with-same-symbol-names) - Example of using go plugins that statically linked C libraries with CGO with same symbol names
 
 ### Java language
 
