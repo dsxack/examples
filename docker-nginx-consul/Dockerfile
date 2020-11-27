@@ -1,7 +1,8 @@
 FROM nginx:latest
 LABEL maintainer="Smotrov Dmitriy <dsxack@gmail.com>"
 
-ENV CONSUL_TEMPLATE_VERSION 0.19.4
+ENV CONSUL_TEMPLATE_VERSION 0.25.1
+ENV CONSUL_ADDR 127.0.0.1:8500
 
 RUN apt-get update && \
 	apt-get install -y wget
