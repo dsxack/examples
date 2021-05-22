@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:7.4.18-apache
 
 RUN apt-get update && apt-get install -y --force-yes \
         default-libmysqlclient-dev  \
