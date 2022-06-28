@@ -101,6 +101,7 @@ Many different pieces of code
 * [go-exec-from-memory](go-exec-from-memory) - Running binary app from memory without saving on the disk
 * [go-https-attack-proxy](go-https-attack-proxy) - HTTPS/HTTP attack proxy that sniffing requests and responses
 * [go-plugins-cgo-with-same-symbol-names](go-plugins-cgo-with-same-symbol-names) - Example of using go plugins that statically linked C libraries with CGO with same symbol names
+* [go-net-with-custom-codec](go-net-with-custom-codec) – Example of usage gonet library with custom codec
 
 ### Java language
 

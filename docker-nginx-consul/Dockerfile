@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM nginx:1.19.9
 LABEL maintainer="Smotrov Dmitriy <dsxack@gmail.com>"
 
 ENV CONSUL_TEMPLATE_VERSION 0.25.1
